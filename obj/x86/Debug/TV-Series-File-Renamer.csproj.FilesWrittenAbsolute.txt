@@ -1,0 +1,5 @@
+/home/matthew/Monodevelop Projects/TV-Series-File-Renamer-Solution/TV-Series-File-Renamer/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/matthew/Monodevelop Projects/TV-Series-File-Renamer-Solution/TV-Series-File-Renamer/bin/Debug/TV-Series-File-Renamer.exe.mdb
+/home/matthew/Monodevelop Projects/TV-Series-File-Renamer-Solution/TV-Series-File-Renamer/bin/Debug/TV-Series-File-Renamer.exe
+/home/matthew/Monodevelop Projects/TV-Series-File-Renamer-Solution/TV-Series-File-Renamer/obj/x86/Debug/TV-Series-File-Renamer.exe
+/home/matthew/Monodevelop Projects/TV-Series-File-Renamer-Solution/TV-Series-File-Renamer/obj/x86/Debug/TV-Series-File-Renamer.exe.mdb
