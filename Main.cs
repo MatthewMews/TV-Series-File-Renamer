@@ -5,8 +5,6 @@ using System.IO;
 using System.Threading;
 using System.Linq;
 
-// 2. Code Reduction - I should be able to reduce large amounts of code during restructuring. May need to introduce some for loops to do this.
-
 namespace TVSeriesFileRenamer
 {
 	public class FileRenamer
