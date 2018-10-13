@@ -13,11 +13,9 @@ namespace TVSeriesFileRenamer
 				string episodeId = String.Empty;
 
 				string fileFormat = Path.GetExtension (filename);
+							
 
-				fileFormat = Path.GetExtension (filename);
-			
-
-				// Series Checeking
+				// Series Checking
 
 
 				if ((filename.Contains ("S01") || filename.Contains ("s01") || filename.Contains ("Series 1"))) { // make contains compare against array?

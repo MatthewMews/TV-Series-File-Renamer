@@ -14,7 +14,6 @@ namespace TVSeriesFileRenamer
 
 		public static void Main(string[] args)
 		{
-
 			CheckDirectoryAndFilesExists ();
 
 			RenameFiles.ScanAndRenameFiles ();
