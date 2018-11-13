@@ -5,12 +5,6 @@ using System.IO;
 using System.Threading;
 using System.Linq;
 
-/*Changes - NOTE - needs commiting to master.
- * 
- * 1. Files are now organised by name to prevent lowercase file names from being organised last
- * 
- * */
-
 namespace TVSeriesFileRenamer
 {
 	public class FileRenamer
