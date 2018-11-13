@@ -5,6 +5,12 @@ using System.IO;
 using System.Threading;
 using System.Linq;
 
+/*Changes - NOTE - needs commiting to master.
+ * 
+ * 1. Files are now organised by name to prevent lowercase file names from being organised last
+ * 
+ * */
+
 namespace TVSeriesFileRenamer
 {
 	public class FileRenamer
@@ -22,7 +28,7 @@ namespace TVSeriesFileRenamer
 
 			RenameFiles.ScanAndRenameFiles ();
 
-			Console.WriteLine ("File renaming complete.");
+			Console.WriteLine ("\nFile renaming complete.");
 
 			Console.ReadKey ();
 		}
@@ -58,9 +64,9 @@ namespace TVSeriesFileRenamer
 
 				Directory.Move (directoryOfFiles, pathWithoutDirectoryName + userInputDirectoryNewName);
 
-
+	
 				directoryOfFiles = pathWithoutDirectoryName + userInputDirectoryNewName;
-				currentFileNames = Directory.GetFiles (directoryOfFiles);
+				currentFileNames = Directory.GetFiles (directoryOfFiles).OrderBy(d => d).ToArray();
 
 
 				if (Directory.Exists(pathWithoutDirectoryName + userInputDirectoryNewName))
@@ -76,7 +82,7 @@ namespace TVSeriesFileRenamer
 		{
 			if (Directory.Exists (directoryOfFiles)) {
 				Console.WriteLine ("\nVideo Directory Found!");
-				currentFileNames = Directory.GetFiles(directoryOfFiles); // We can now go get those files.
+				currentFileNames = Directory.GetFiles (directoryOfFiles).OrderBy(d => d).ToArray();// We can now go get those files. OrderBy organises the videos by name.
 
 				Console.WriteLine ("\nFinding video(s)...\n");
 
@@ -100,7 +106,7 @@ namespace TVSeriesFileRenamer
 		{
 			int numOfRenamedFiles = 0;
 
-			foreach(string file in currentFileNames) // Checks to see if any more files need renaming.
+			foreach(string file in currentFileNames.OrderBy(d => d).ToArray()) // Checks to see if any more files need renaming.
 			{
 				string tempFile = Path.GetFileName(file);
 

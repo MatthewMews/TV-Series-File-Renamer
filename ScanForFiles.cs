@@ -6,19 +6,18 @@ namespace TVSeriesFileRenamer
 	public class RenameFiles
 	{
 		public static void ScanAndRenameFiles()
-		{
+		{			
 			foreach (string filename in FileRenamer.currentFileNames) 
 			{
 				string seriesId = String.Empty;
 				string episodeId = String.Empty;
 
 				string fileFormat = Path.GetExtension (filename);
-							
 
 				// Series Checking
 
 
-				if ((filename.Contains ("S01") || filename.Contains ("s01") || filename.Contains ("Series 1"))) { // make contains compare against array?
+				if ((filename.Contains("S01") || filename.Contains ("s01") || filename.Contains ("Series 1"))) { // make contains compare against array?
 					seriesId = "S01";
 				} 
 				else if ((filename.Contains ("S02") || filename.Contains ("s02") || filename.Contains ("Series 2"))) {
@@ -59,10 +58,8 @@ namespace TVSeriesFileRenamer
 					Console.ResetColor ();
 					seriesId = "S" + Console.ReadLine ();
 				}
-
-
+					
 				// Episode Checking
-
 
 				if((filename.Contains("E01") || filename.Contains("e01") || filename.Contains("Episode 1")))
 				{
@@ -123,6 +120,46 @@ namespace TVSeriesFileRenamer
 				else if((filename.Contains("E12") || filename.Contains("e12") || filename.Contains("Episode 12")))
 				{
 					episodeId = "E12"; 
+					FileRenamer.RenameFile (filename, seriesId, episodeId, fileFormat);
+				}
+				else if((filename.Contains("E13") || filename.Contains("e13") || filename.Contains("Episode 13")))
+				{
+					episodeId = "E13"; 
+					FileRenamer.RenameFile (filename, seriesId, episodeId, fileFormat);
+				}
+				else if((filename.Contains("E14") || filename.Contains("e14") || filename.Contains("Episode 14")))
+				{
+					episodeId = "E14"; 
+					FileRenamer.RenameFile (filename, seriesId, episodeId, fileFormat);
+				}
+				else if((filename.Contains("E15") || filename.Contains("e15") || filename.Contains("Episode 15")))
+				{
+					episodeId = "E15"; 
+					FileRenamer.RenameFile (filename, seriesId, episodeId, fileFormat);
+				}
+				else if((filename.Contains("E16") || filename.Contains("e16") || filename.Contains("Episode 16")))
+				{
+					episodeId = "E16"; 
+					FileRenamer.RenameFile (filename, seriesId, episodeId, fileFormat);
+				}
+				else if((filename.Contains("E17") || filename.Contains("e17") || filename.Contains("Episode 17")))
+				{
+					episodeId = "E17"; 
+					FileRenamer.RenameFile (filename, seriesId, episodeId, fileFormat);
+				}
+				else if((filename.Contains("E18") || filename.Contains("e18") || filename.Contains("Episode 18")))
+				{
+					episodeId = "E18"; 
+					FileRenamer.RenameFile (filename, seriesId, episodeId, fileFormat);
+				}
+				else if((filename.Contains("E19") || filename.Contains("e19") || filename.Contains("Episode 19")))
+				{
+					episodeId = "E19"; 
+					FileRenamer.RenameFile (filename, seriesId, episodeId, fileFormat);
+				}
+				else if((filename.Contains("E20") || filename.Contains("e20") || filename.Contains("Episode 20")))
+				{
+					episodeId = "E20"; 
 					FileRenamer.RenameFile (filename, seriesId, episodeId, fileFormat);
 				}
 				else {
