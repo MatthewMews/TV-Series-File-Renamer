@@ -57,11 +57,9 @@ namespace TVSeriesFileRenamer
 				string userInputDirectoryNewName = Console.ReadLine ();
 
 				Directory.Move (directoryOfFiles, pathWithoutDirectoryName + userInputDirectoryNewName);
-
 	
 				directoryOfFiles = pathWithoutDirectoryName + userInputDirectoryNewName;
-				currentFileNames = Directory.GetFiles (directoryOfFiles).OrderBy(d => d).ToArray();
-
+				currentFileNames = Directory.GetFiles (directoryOfFiles).Select (file => Path.GetFileName (file)).ToArray ();
 
 				if (Directory.Exists(pathWithoutDirectoryName + userInputDirectoryNewName))
 				{
@@ -75,16 +73,18 @@ namespace TVSeriesFileRenamer
 		private static void CheckDirectoryAndFilesExists(string directoryOfFiles)
 		{
 			if (Directory.Exists (directoryOfFiles)) {
-				Console.WriteLine ("\nVideo Directory Found!");
-				currentFileNames = Directory.GetFiles (directoryOfFiles).OrderBy(d => d).ToArray();// We can now go get those files. OrderBy organises the videos by name.
+				Console.WriteLine ("\nVideo Directory Found!\n");
+							
 
-				Console.WriteLine ("\nFinding video(s)...\n");
+				currentFileNames = Directory.GetFiles (directoryOfFiles) // We can now go get those files. OrderBy organises the videos by name.
+					.Select(v => Path.GetFileName(v))
+					.Where (v => v.ToLower ().EndsWith (".mp4") || v.EndsWith (".avi") ||
+									           v.EndsWith (".mkv") || v.EndsWith (".wmv")).ToArray();
 
-				string[] vids = Directory.GetFiles (directoryOfFiles);
-
-				if(vids.Length > 0)
+				if(currentFileNames.Count() > 0)
 				{
-					Console.WriteLine ($"{vids.Length} Video(s) found!\n");
+					Console.WriteLine ($"{currentFileNames.Count()} Video(s) found!\n");
+
 				} else {
 					Console.WriteLine ("No video(s) were found.\n");
 					Environment.Exit (2);
@@ -95,7 +95,7 @@ namespace TVSeriesFileRenamer
 				AskForDirectoryPath ();
 			}
 		}
-
+			
 		public static void RenameFile(string filename, string seriesId, string episodeId, string fileFormat)
 		{
 			int numOfRenamedFiles = 0;

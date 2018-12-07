@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using TVSeriesFileRenamer;
 
 namespace TVSeriesFileRenamer
 {
@@ -11,11 +12,9 @@ namespace TVSeriesFileRenamer
 			{
 				string seriesId = String.Empty;
 				string episodeId = String.Empty;
-
 				string fileFormat = Path.GetExtension (filename);
 
 				// Series Checking
-
 
 				if ((filename.Contains("S01") || filename.Contains ("s01") || filename.Contains ("Series 1"))) { // make contains compare against array?
 					seriesId = "S01";
@@ -54,7 +53,7 @@ namespace TVSeriesFileRenamer
 					seriesId = "S12";
 				} else {
 					Console.ForegroundColor = ConsoleColor.Magenta;
-					Console.WriteLine ("Warning - The program could not detect the show's season number.\nPlease enter the season number below:");
+					Console.WriteLine ($"\nWarning - The program could not detect the show's season number for {filename}.\nPlease enter the season number below:");
 					Console.ResetColor ();
 					seriesId = "S" + Console.ReadLine ();
 				}
@@ -164,10 +163,10 @@ namespace TVSeriesFileRenamer
 				}
 				else {
 					Console.ForegroundColor = ConsoleColor.Magenta;
-					Console.WriteLine ("Warning - The program could not detect the show's season number.\nPlease enter the season number below:");
+					Console.WriteLine ($"Warning - The program could not detect the show's season number for {filename}.\nPlease enter the season number below:");
 					Console.ResetColor ();
 					episodeId = "S" + Console.ReadLine ();
-					FileRenamer.RenameFile (filename, seriesId, episodeId, fileFormat);
+					FileRenamer.RenameFile (FileRenamer.directoryOfFiles + "/" + filename, seriesId, episodeId, fileFormat); // directoryOfFiles was added as the filepath has been removed previously.
 				}
 			}
 		}
