@@ -14,33 +14,61 @@ namespace TVSeriesFileRenamer
 
 		public static void Main(string[] args)
 		{
+			Console.Title = "TV Series File Renamer";
+
 			AskForDirectoryPath ();
-		
+
 			CheckDirectoryAndFilesExists (directoryOfFiles);
 
 			RenameVideoFolder (ref currentFileNames, ref directoryOfFiles);
 
 			RenameFiles.ScanAndRenameFiles ();
 
-			Console.WriteLine ("\nFile renaming complete.");
+			Console.WriteLine ("\nFile renaming complete. Press any key to exit.");
 
-			Console.ReadKey ();
+			Console.ReadLine ();
 		}
 
 		private static void AskForDirectoryPath()
 		{
-			Console.WriteLine ("Please enter the path of the directory");
+			Console.WriteLine ("Please enter the folder path the videos are located in.\n");
 			string userInputFilePath = Console.ReadLine ();
 
 			if (userInputFilePath.ToLower() == "exit")
 			{
 				Environment.Exit (1);
 			}
-				
+
 			directoryOfFiles = userInputFilePath;
 
 			if (!Directory.Exists (userInputFilePath)) {
 				CheckDirectoryAndFilesExists(directoryOfFiles);
+			}
+		}
+
+		private static void CheckDirectoryAndFilesExists(string directoryOfFiles)
+		{
+			if (Directory.Exists (directoryOfFiles)) {
+				Console.WriteLine ("\nVideo Directory Found!\n");
+
+
+				currentFileNames = Directory.GetFiles (directoryOfFiles) // We can now go get those files. OrderBy organises the videos by name.
+					.Select(v => Path.GetFileName(v))
+					.Where (v => v.ToLower ().EndsWith (".mp4") || v.EndsWith (".avi") ||
+						v.EndsWith (".mkv") || v.EndsWith (".wmv")).ToArray();
+
+				if(currentFileNames.Count() > 0)
+				{
+					Console.WriteLine ($"{currentFileNames.Count()} Video(s) found!\n");
+
+				} else {
+					Console.WriteLine ("Error: No video(s) were found.\n");
+					Environment.Exit (2);
+				}
+
+			} else {
+				Console.WriteLine ("\nError: Video Directory not found. Please try again.\n");
+				AskForDirectoryPath ();
 			}
 		}
 
@@ -56,77 +84,32 @@ namespace TVSeriesFileRenamer
 				Console.WriteLine ("\nPlease enter the folders new name.\n");
 				string userInputDirectoryNewName = Console.ReadLine ();
 
-				Directory.Move (directoryOfFiles, pathWithoutDirectoryName + userInputDirectoryNewName);
-	
+				if (!Directory.Exists (pathWithoutDirectoryName + userInputDirectoryNewName)) {
+
+					Directory.Move (directoryOfFiles, pathWithoutDirectoryName + userInputDirectoryNewName);
+				} else {
+					Console.WriteLine("\nError: Unable to rename directory as there is already a directory with the same name.\n");
+					RenameVideoFolder (ref currentFileNames, ref directoryOfFiles);
+				}
+
 				directoryOfFiles = pathWithoutDirectoryName + userInputDirectoryNewName;
 				currentFileNames = Directory.GetFiles (directoryOfFiles).Select (file => Path.GetFileName (file)).ToArray ();
 
 				if (Directory.Exists(pathWithoutDirectoryName + userInputDirectoryNewName))
 				{
-					Console.WriteLine ("The directory has been successfully renamed!");
+					Console.WriteLine ($"\nThe directory has been successfully renamed to {userInputDirectoryNewName}!");
 				} else {
-					Console.WriteLine ("Error attemping to rename directory.");
+					Console.WriteLine ("Error: Unable to rename directory.");
 				}
 			}
 		}
 
-		private static void CheckDirectoryAndFilesExists(string directoryOfFiles)
-		{
-			if (Directory.Exists (directoryOfFiles)) {
-				Console.WriteLine ("\nVideo Directory Found!\n");
-							
-
-				currentFileNames = Directory.GetFiles (directoryOfFiles) // We can now go get those files. OrderBy organises the videos by name.
-					.Select(v => Path.GetFileName(v))
-					.Where (v => v.ToLower ().EndsWith (".mp4") || v.EndsWith (".avi") ||
-									           v.EndsWith (".mkv") || v.EndsWith (".wmv")).ToArray();
-
-				if(currentFileNames.Count() > 0)
-				{
-					Console.WriteLine ($"{currentFileNames.Count()} Video(s) found!\n");
-
-				} else {
-					Console.WriteLine ("No video(s) were found.\n");
-					Environment.Exit (2);
-				}
-
-			} else {
-				Console.WriteLine ("\nVideo Directory not found. Please try again.\n");
-				AskForDirectoryPath ();
-			}
-		}
-			
 		public static void RenameFile(string filename, string seriesId, string episodeId, string fileFormat)
 		{
-			int numOfRenamedFiles = 0;
-
-			foreach(string file in currentFileNames.OrderBy(d => d).ToArray()) // Checks to see if any more files need renaming.
-			{
-				string tempFile = Path.GetFileName(file);
-
-				// Checking to see if the file name has been updated with the new naming convention listed below.
-				if(tempFile.StartsWith("S01") || tempFile.StartsWith("S02") || tempFile.StartsWith("S03") || tempFile.StartsWith("S04") || tempFile.StartsWith("S05") 
-					|| tempFile.StartsWith("S06") || tempFile.StartsWith("S07") || tempFile.StartsWith("S08") || tempFile.StartsWith("S09") || tempFile.StartsWith("S10") 
-					|| tempFile.StartsWith("S11") || tempFile.StartsWith("S12"))
-				{
-					numOfRenamedFiles++;
-				} 
-
-				if (numOfRenamedFiles == currentFileNames.Length) {
-
-					return; // return to main function, job is done!
-				}
-			}
-
-			GetEpisodeName (filename, seriesId, episodeId, fileFormat); // if there's a file left to rename, calls GetEpisodeName();
-		}
-
-		private static void GetEpisodeName(string filename, string seriesId, string episodeId, string fileFormat)
-		{
-			Console.WriteLine ($"\nWhat is the name of {seriesId} {episodeId}?");
+			Console.WriteLine ($"\nWhat is the name of {seriesId} {episodeId}?\n");
 			string episodeName = Console.ReadLine ();
 
-			File.Move (filename, directoryOfFiles + "/" + seriesId + " " + episodeId + " - " + episodeName + fileFormat);
+			File.Move (directoryOfFiles + "/" + filename, directoryOfFiles + "/" + seriesId + " " + episodeId + " - " + episodeName + fileFormat);
 
 			if (File.Exists(directoryOfFiles + "/" + seriesId + " " + episodeId + " - " + episodeName + fileFormat))
 			{
@@ -134,7 +117,7 @@ namespace TVSeriesFileRenamer
 				Console.WriteLine ("\nFile has been renamed succesfully!");
 			} else {
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine ("\nError attempting to rename file.");
+				Console.WriteLine ("\nError: Unable to rename file.");
 			}
 
 			Console.ResetColor ();

@@ -51,13 +51,53 @@ namespace TVSeriesFileRenamer
 				}
 				else if ((filename.Contains ("S12") || filename.Contains ("s12") || filename.Contains ("Series 12"))) {
 					seriesId = "S12";
-				} else {
+				}
+				else if ((filename.Contains ("S13") || filename.Contains ("s13") || filename.Contains ("Series 13"))) {
+					seriesId = "S13";
+				} 
+				else if ((filename.Contains ("S14") || filename.Contains ("s14") || filename.Contains ("Series 14"))) {
+					seriesId = "S14";
+				} 
+				else if ((filename.Contains ("S15") || filename.Contains ("s15") || filename.Contains ("Series 15"))) {
+					seriesId = "S15";
+				} 
+				else if ((filename.Contains ("S16") || filename.Contains ("s16") || filename.Contains ("Series 16"))) {
+					seriesId = "S16";
+				}
+				else if ((filename.Contains ("S17") || filename.Contains ("s17") || filename.Contains ("Series 17"))) {
+					seriesId = "S17";
+				}
+				else if ((filename.Contains ("S18") || filename.Contains ("s18") || filename.Contains ("Series 18"))) {
+					seriesId = "S18";
+				}
+				else if ((filename.Contains ("S19") || filename.Contains ("s19") || filename.Contains ("Series 19"))) {
+					seriesId = "S19";
+				}
+				else if ((filename.Contains ("S20") || filename.Contains ("s20") || filename.Contains ("Series 20"))) {
+					seriesId = "S20";
+				}
+				else if ((filename.Contains ("S21") || filename.Contains ("s21") || filename.Contains ("Series 21"))) {
+					seriesId = "S21";
+				}
+				else if ((filename.Contains ("S22") || filename.Contains ("s22") || filename.Contains ("Series 22"))) {
+					seriesId = "S22";
+				}
+				else if ((filename.Contains ("S23") || filename.Contains ("s23") || filename.Contains ("Series 23"))) {
+					seriesId = "S23";
+				}
+				else if ((filename.Contains ("S24") || filename.Contains ("s24") || filename.Contains ("Series 24"))) {
+					seriesId = "S24";
+				}
+				else if ((filename.Contains ("S25") || filename.Contains ("s25") || filename.Contains ("Series 25"))) {
+					seriesId = "S25";
+				}
+				else {
 					Console.ForegroundColor = ConsoleColor.Magenta;
 					Console.WriteLine ($"\nWarning - The program could not detect the show's season number for {filename}.\nPlease enter the season number below:");
 					Console.ResetColor ();
 					seriesId = "S" + Console.ReadLine ();
 				}
-					
+
 				// Episode Checking
 
 				if((filename.Contains("E01") || filename.Contains("e01") || filename.Contains("Episode 1")))
