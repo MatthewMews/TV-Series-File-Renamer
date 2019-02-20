@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Collections.Generic;
 using System.IO;
-using System.Threading;
 using System.Linq;
 
 namespace TVSeriesFileRenamer
@@ -22,11 +19,9 @@ namespace TVSeriesFileRenamer
 
 			RenameVideoFolder (ref currentFileNames, ref directoryOfFiles);
 
-			RenameFiles.ScanAndRenameFiles ();
+            RenameFiles.ScanAndRenameFiles (currentFileNames);
 
-			Console.WriteLine ("\nFile renaming complete. Press any key to exit.");
-
-			Console.ReadLine ();
+			Console.WriteLine ("\nFile renaming complete.");
 		}
 
 		private static void AskForDirectoryPath()
@@ -51,10 +46,9 @@ namespace TVSeriesFileRenamer
 			if (Directory.Exists (directoryOfFiles)) {
 				Console.WriteLine ("\nVideo Directory Found!\n");
 
-
 				currentFileNames = Directory.GetFiles (directoryOfFiles) // We can now go get those files. OrderBy organises the videos by name.
 					.Select(v => Path.GetFileName(v))
-					.Where (v => v.ToLower ().EndsWith (".mp4") || v.EndsWith (".avi") ||
+					.Where (v => v.EndsWith (".mp4") || v.EndsWith (".avi") ||
 						v.EndsWith (".mkv") || v.EndsWith (".wmv")).ToArray();
 
 				if(currentFileNames.Count() > 0)
@@ -90,16 +84,16 @@ namespace TVSeriesFileRenamer
 				} else {
 					Console.WriteLine("\nError: Unable to rename directory as there is already a directory with the same name.\n");
 					RenameVideoFolder (ref currentFileNames, ref directoryOfFiles);
+                    return;
 				}
 
 				directoryOfFiles = pathWithoutDirectoryName + userInputDirectoryNewName;
-				currentFileNames = Directory.GetFiles (directoryOfFiles).Select (file => Path.GetFileName (file)).ToArray ();
 
 				if (Directory.Exists(pathWithoutDirectoryName + userInputDirectoryNewName))
 				{
 					Console.WriteLine ($"\nThe directory has been successfully renamed to {userInputDirectoryNewName}!");
 				} else {
-					Console.WriteLine ("Error: Unable to rename directory.");
+                    Console.WriteLine("Error: Unable to rename directory.");
 				}
 			}
 		}
